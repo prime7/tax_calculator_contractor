@@ -5,8 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "export": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "deploy": "npx wrangler deploy"
   },
   "dependencies": {
     "@radix-ui/react-collapsible": "^1.1.12",
