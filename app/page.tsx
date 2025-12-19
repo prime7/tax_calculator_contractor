@@ -13,7 +13,7 @@ import { LucideLeaf as MapleLeaf } from "lucide-react"
 
 export default function TaxCalculatorPage() {
   // Input state
-  const [income, setIncome] = useState(150000)
+  const [income, setIncome] = useState(100000)
   const [province, setProvince] = useState("ON")
   const [deductions, setDeductions] = useState(0)
   const [salaryAmount, setSalaryAmount] = useState(65000)
