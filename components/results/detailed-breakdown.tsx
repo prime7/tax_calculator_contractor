@@ -18,6 +18,7 @@ export function DetailedBreakdown({ result, province }: DetailedBreakdownProps) 
   const provinceData = getProvinceByCode(province)
 
   const { soleProprietorship: sole, corporation: corp } = result
+  const isQuebec = provinceData?.isQuebec || false
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
@@ -54,14 +55,14 @@ export function DetailedBreakdown({ result, province }: DetailedBreakdownProps) 
                     <td className="text-right py-1.5 sm:py-2 pr-3 sm:pr-0">{formatCurrency(corp.grossIncome)}</td>
                   </tr>
                   <tr>
-                    <td className="py-1.5 sm:py-2 pl-3 sm:pl-0">Deductions</td>
+                    <td className="py-1.5 sm:py-2 pl-3 sm:pl-0">Business Deductions</td>
                     <td className="text-right py-1.5 sm:py-2">-{formatCurrency(sole.businessDeductions)}</td>
                     <td className="text-right py-1.5 sm:py-2 pr-3 sm:pr-0">
                       -{formatCurrency(sole.businessDeductions)}
                     </td>
                   </tr>
                   <tr className="bg-muted/30">
-                    <td className="py-1.5 sm:py-2 font-medium pl-3 sm:pl-0">Net Business</td>
+                    <td className="py-1.5 sm:py-2 font-medium pl-3 sm:pl-0">Net Business Income</td>
                     <td className="text-right py-1.5 sm:py-2 font-medium">{formatCurrency(sole.netBusinessIncome)}</td>
                     <td className="text-right py-1.5 sm:py-2 font-medium pr-3 sm:pr-0">
                       {formatCurrency(sole.netBusinessIncome)}
@@ -81,14 +82,14 @@ export function DetailedBreakdown({ result, province }: DetailedBreakdownProps) 
                     <td className="py-1.5 sm:py-2 pl-3 sm:pl-0">Federal Tax</td>
                     <td className="text-right py-1.5 sm:py-2 text-destructive">{formatCurrency(sole.federalTax)}</td>
                     <td className="text-right py-1.5 sm:py-2 text-destructive pr-3 sm:pr-0">
-                      {formatCurrency(corp.personalTaxOnSalary * 0.6)}
+                      {formatCurrency(corp.personalTaxOnSalary * 0.5)}
                     </td>
                   </tr>
                   <tr>
                     <td className="py-1.5 sm:py-2 pl-3 sm:pl-0">Provincial Tax</td>
                     <td className="text-right py-1.5 sm:py-2 text-destructive">{formatCurrency(sole.provincialTax)}</td>
                     <td className="text-right py-1.5 sm:py-2 text-destructive pr-3 sm:pr-0">
-                      {formatCurrency(corp.personalTaxOnSalary * 0.4)}
+                      {formatCurrency(corp.personalTaxOnSalary * 0.5)}
                     </td>
                   </tr>
                   <tr>
@@ -106,16 +107,47 @@ export function DetailedBreakdown({ result, province }: DetailedBreakdownProps) 
                     </td>
                   </tr>
                   <tr>
-                    <td className="py-1.5 sm:py-2 pl-3 sm:pl-0">CPP</td>
+                    <td className="py-1.5 sm:py-2 pl-3 sm:pl-0">{isQuebec ? "QPP" : "CPP"}</td>
                     <td className="text-right py-1.5 sm:py-2 text-destructive">
                       {formatCurrency(sole.cppContributions)}
                     </td>
                     <td className="text-right py-1.5 sm:py-2 text-destructive pr-3 sm:pr-0">
-                      {formatCurrency(corp.employerCpp * 2)}
+                      {formatCurrency(corp.employeeCpp + corp.employerCpp)}
                     </td>
                   </tr>
+                  <tr>
+                    <td className="py-1.5 sm:py-2 pl-3 sm:pl-0">EI</td>
+                    <td className="text-right py-1.5 sm:py-2 text-destructive">
+                      {formatCurrency(sole.eiContributions)}
+                    </td>
+                    <td className="text-right py-1.5 sm:py-2 text-destructive pr-3 sm:pr-0">
+                      {formatCurrency(corp.employeeEi + corp.employerEi)}
+                    </td>
+                  </tr>
+                  {isQuebec && (
+                    <tr>
+                      <td className="py-1.5 sm:py-2 pl-3 sm:pl-0">QPIP</td>
+                      <td className="text-right py-1.5 sm:py-2 text-destructive">
+                        {formatCurrency(sole.qpipContributions || 0)}
+                      </td>
+                      <td className="text-right py-1.5 sm:py-2 text-destructive pr-3 sm:pr-0">
+                        {formatCurrency((corp.qpipEmployee || 0) + (corp.qpipEmployer || 0))}
+                      </td>
+                    </tr>
+                  )}
+                  {provinceData?.hasHealthPremium && (
+                    <tr>
+                      <td className="py-1.5 sm:py-2 pl-3 sm:pl-0">Health Premium</td>
+                      <td className="text-right py-1.5 sm:py-2 text-destructive">
+                        {formatCurrency(sole.healthPremium || 0)}
+                      </td>
+                      <td className="text-right py-1.5 sm:py-2 text-destructive pr-3 sm:pr-0">
+                        {formatCurrency(corp.healthPremium || 0)}
+                      </td>
+                    </tr>
+                  )}
                   <tr className="bg-destructive/5">
-                    <td className="py-1.5 sm:py-2 font-semibold text-destructive pl-3 sm:pl-0">Total Tax</td>
+                    <td className="py-1.5 sm:py-2 font-semibold text-destructive pl-3 sm:pl-0">Total Tax & Deductions</td>
                     <td className="text-right py-1.5 sm:py-2 font-bold text-destructive">
                       {formatCurrency(sole.totalTax)}
                     </td>
@@ -136,7 +168,7 @@ export function DetailedBreakdown({ result, province }: DetailedBreakdownProps) 
                     <td className="text-right py-1.5 sm:py-2 pr-3 sm:pr-0">{formatPercentage(corp.effectiveRate)}</td>
                   </tr>
                   <tr>
-                    <td className="py-1.5 sm:py-2 text-green-600 pl-3 sm:pl-0">RRSP Room</td>
+                    <td className="py-1.5 sm:py-2 text-green-600 pl-3 sm:pl-0">RRSP Room Created</td>
                     <td className="text-right py-1.5 sm:py-2 text-green-600">{formatCurrency(sole.rrspRoom)}</td>
                     <td className="text-right py-1.5 sm:py-2 text-green-600 pr-3 sm:pr-0">
                       {formatCurrency(corp.rrspRoom)}
@@ -149,16 +181,30 @@ export function DetailedBreakdown({ result, province }: DetailedBreakdownProps) 
             {/* Province Info */}
             {provinceData && (
               <div className="rounded-lg bg-muted/30 p-3 sm:p-4 space-y-2">
-                <h4 className="text-sm font-medium">Province: {provinceData.name}</h4>
+                <h4 className="text-sm font-medium">
+                  {provinceData.name} Tax Rates {isQuebec && "(with Quebec Abatement)"}
+                </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 text-xs sm:text-sm">
                   <div>
-                    <span className="text-muted-foreground">Corp Rate:</span>{" "}
+                    <span className="text-muted-foreground">Small Business Rate:</span>{" "}
                     <span className="font-medium">{formatPercentage(provinceData.combinedCorpRate * 100)}</span>
                   </div>
                   <div>
                     <span className="text-muted-foreground">Dividend Credit:</span>{" "}
-                    <span className="font-medium">{formatPercentage(provinceData.dividendTaxCredit * 100)}</span>
+                    <span className="font-medium">{formatPercentage(provinceData.nonEligibleDividendTaxCredit * 100)}</span>
                   </div>
+                  {isQuebec && (
+                    <>
+                      <div>
+                        <span className="text-muted-foreground">QPP Rate:</span>{" "}
+                        <span className="font-medium">6.4%</span>
+                      </div>
+                      <div>
+                        <span className="text-muted-foreground">QPIP Rate:</span>{" "}
+                        <span className="font-medium">0.494%</span>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             )}

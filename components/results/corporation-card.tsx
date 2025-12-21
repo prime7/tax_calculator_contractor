@@ -36,7 +36,7 @@ export function CorporationCard({ result }: CorporationCardProps) {
           <div className="flex items-center justify-between py-1.5 sm:py-2 border-b border-border/50">
             <div className="flex items-center gap-1">
               <span className="text-xs sm:text-sm text-muted-foreground">Salary</span>
-              <InfoTooltip content="Salary paid from your corporation" />
+              <InfoTooltip content="Salary creates RRSP room and CPP benefits. Deductible from corporate income." />
             </div>
             <span className="text-sm sm:text-base font-medium">{formatCurrency(result.salary)}</span>
           </div>
@@ -44,7 +44,7 @@ export function CorporationCard({ result }: CorporationCardProps) {
           <div className="flex items-center justify-between py-1.5 sm:py-2 border-b border-border/50">
             <div className="flex items-center gap-1">
               <span className="text-xs sm:text-sm text-muted-foreground">Dividends</span>
-              <InfoTooltip content="Eligible dividends from after-tax income" />
+              <InfoTooltip content="Non-eligible dividends from small business income. Taxed at preferential rates with dividend tax credits." />
             </div>
             <span className="text-sm sm:text-base font-medium">{formatCurrency(result.dividendsPaid)}</span>
           </div>
@@ -57,7 +57,7 @@ export function CorporationCard({ result }: CorporationCardProps) {
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-1">
                 <span className="text-muted-foreground">Corp Tax</span>
-                <InfoTooltip content="Small business corporate tax rate" />
+                <InfoTooltip content="Small business rate (11-12%) on first $500K, then 26.5% on income above." />
               </div>
               <span className="text-destructive">{formatCurrency(result.corporateTax)}</span>
             </div>
@@ -68,7 +68,7 @@ export function CorporationCard({ result }: CorporationCardProps) {
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-1">
                 <span className="text-muted-foreground">Dividend Tax</span>
-                <InfoTooltip content="After gross-up and credits" />
+                <InfoTooltip content="Personal tax on dividends after 15% gross-up and federal/provincial dividend tax credits." />
               </div>
               <span className="text-destructive">{formatCurrency(result.personalTaxOnDividends)}</span>
             </div>
@@ -90,7 +90,7 @@ export function CorporationCard({ result }: CorporationCardProps) {
         <div className="flex items-center justify-between text-xs sm:text-sm pt-1 sm:pt-2 border-t border-border/50">
           <div className="flex items-center gap-1">
             <span className="text-muted-foreground">RRSP Room</span>
-            <InfoTooltip content="Only salary creates RRSP room" />
+            <InfoTooltip content="Only salary creates RRSP room (18% of salary, max $31,560). Dividends don't create RRSP room." />
           </div>
           <span className="font-medium text-green-600">{formatCurrency(result.rrspRoom)}</span>
         </div>
