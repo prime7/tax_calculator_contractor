@@ -36,7 +36,7 @@ export function SoleProprietorshipCard({ result }: SoleProprietorshipCardProps) 
           <div className="flex items-center justify-between py-1.5 sm:py-2 border-b border-border/50">
             <div className="flex items-center gap-1">
               <span className="text-xs sm:text-sm text-muted-foreground">Deductions</span>
-              <InfoTooltip content="Standard business deductions (10% default)" />
+              <InfoTooltip content="Business expenses like home office, vehicle, equipment, professional development (15% default)" />
             </div>
             <span className="text-sm sm:text-base font-medium text-muted-foreground">
               -{formatCurrency(result.businessDeductions)}
@@ -63,7 +63,7 @@ export function SoleProprietorshipCard({ result }: SoleProprietorshipCardProps) 
             <div className="flex justify-between">
               <div className="flex items-center gap-1">
                 <span className="text-muted-foreground">CPP</span>
-                <InfoTooltip content="Both employee and employer portions" />
+                <InfoTooltip content="Self-employed pay both employee (5.95%) and employer (5.95%) portions. Max $7,735/year." />
               </div>
               <span className="text-destructive">{formatCurrency(result.cppContributions)}</span>
             </div>
@@ -85,7 +85,7 @@ export function SoleProprietorshipCard({ result }: SoleProprietorshipCardProps) 
         <div className="flex items-center justify-between text-xs sm:text-sm pt-1 sm:pt-2 border-t border-border/50">
           <div className="flex items-center gap-1">
             <span className="text-muted-foreground">RRSP Room</span>
-            <InfoTooltip content="Contribution room for next year" />
+            <InfoTooltip content="18% of earned income, max $31,560. Use this room to reduce next year's taxes." />
           </div>
           <span className="font-medium text-green-600">{formatCurrency(result.rrspRoom)}</span>
         </div>

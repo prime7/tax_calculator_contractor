@@ -42,7 +42,7 @@ export function SalaryDividendSlider({
         </div>
         <CardDescription className="flex items-center gap-1 text-xs sm:text-sm">
           Adjust how you pay yourself from your corporation
-          <InfoTooltip content="Salary creates RRSP room and CPP benefits, while dividends are taxed at preferential rates." />
+          <InfoTooltip content="Salary creates RRSP room and CPP benefits but has higher payroll costs. Dividends have lower tax rates but no RRSP room. The optimal mix minimizes total tax." />
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4 sm:space-y-6 px-3 sm:px-6">

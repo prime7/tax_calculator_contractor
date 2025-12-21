@@ -57,14 +57,20 @@ export function CalculatorForm({
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <span className="text-xs sm:text-sm font-medium text-foreground">Personal Deductions</span>
-                <TooltipProvider>
+                <TooltipProvider delayDuration={200}>
                   <Tooltip>
-                    <TooltipTrigger>
-                      <Info className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-muted-foreground" />
+                    <TooltipTrigger asChild>
+                      <button
+                        type="button"
+                        className="inline-flex items-center justify-center"
+                        aria-label="More information about deductions"
+                      >
+                        <Info className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-muted-foreground hover:text-foreground transition-colors" />
+                      </button>
                     </TooltipTrigger>
-                    <TooltipContent className="max-w-xs">
+                    <TooltipContent className="max-w-xs" side="top">
                       <p className="text-xs sm:text-sm">
-                        RRSP contributions and other deductions. Leave at $0 for default 10%.
+                        RRSP contributions and other deductions. Leave at $0 for default 15%.
                       </p>
                     </TooltipContent>
                   </Tooltip>
