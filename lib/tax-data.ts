@@ -11,6 +11,7 @@ export const FEDERAL_BRACKETS: TaxBracket[] = [
 
 export const FEDERAL_BASIC_PERSONAL_AMOUNT = 15705
 export const FEDERAL_SMALL_BUSINESS_RATE = 0.09
+export const QUEBEC_ABATEMENT = 0.165 // 16.5% reduction in federal tax for Quebec
 
 // CPP Constants 2024
 export const CPP_MAX_PENSIONABLE_EARNINGS = 68500
@@ -18,13 +19,55 @@ export const CPP_BASIC_EXEMPTION = 3500
 export const CPP_RATE = 0.0595
 export const CPP_MAX_CONTRIBUTION = 3867.5
 
+// QPP Constants 2024 (Quebec Pension Plan)
+export const QPP_MAX_PENSIONABLE_EARNINGS = 68500
+export const QPP_BASIC_EXEMPTION = 3500
+export const QPP_RATE = 0.064
+export const QPP_MAX_CONTRIBUTION = 4038.4
+
+// QPIP Constants 2024 (Quebec Parental Insurance Plan)
+export const QPIP_MAX_INSURABLE_EARNINGS = 94000
+export const QPIP_EMPLOYEE_RATE = 0.00494
+export const QPIP_EMPLOYER_RATE = 0.00692
+export const QPIP_SELF_EMPLOYED_RATE = 0.00878
+
+// EI Constants 2024 (Employment Insurance)
+export const EI_MAX_INSURABLE_EARNINGS = 63200
+export const EI_EMPLOYEE_RATE = 0.0166
+export const EI_EMPLOYER_RATE = 0.02324
+export const EI_MAX_EMPLOYEE_CONTRIBUTION = 1049.12
+export const EI_MAX_EMPLOYER_CONTRIBUTION = 1468.77
+// Quebec has reduced EI rates (no EI for parental benefits, covered by QPIP)
+export const EI_QUEBEC_EMPLOYEE_RATE = 0.0132
+export const EI_QUEBEC_EMPLOYER_RATE = 0.01848
+
 // RRSP Constants 2024
 export const RRSP_RATE = 0.18
 export const RRSP_MAX = 31560
 
-// Dividend gross-up and federal credit
-export const DIVIDEND_GROSS_UP = 0.38
-export const FEDERAL_DIVIDEND_TAX_CREDIT = 0.150198
+// Small Business Deduction Limit
+export const SBD_LIMIT = 500000
+export const GENERAL_CORP_RATE = 0.265 // Combined federal + provincial average for income over SBD limit
+
+// Dividend gross-up and federal credits
+// Eligible dividends (from public corps or CCPCs with general rate income)
+export const ELIGIBLE_DIVIDEND_GROSS_UP = 0.38
+export const ELIGIBLE_FEDERAL_DIVIDEND_TAX_CREDIT = 0.150198
+
+// Non-eligible dividends (from CCPCs with small business rate income)
+export const NON_ELIGIBLE_DIVIDEND_GROSS_UP = 0.15
+export const NON_ELIGIBLE_FEDERAL_DIVIDEND_TAX_CREDIT = 0.090301
+
+// Ontario Health Premium 2024
+export const ONTARIO_HEALTH_PREMIUM_BRACKETS = [
+  { min: 0, max: 20000, amount: 0 },
+  { min: 20000, max: 25000, amount: 0, rate: 0.06 }, // $0-$300
+  { min: 25000, max: 36000, amount: 300, rate: 0.06 }, // $300-$450
+  { min: 36000, max: 48000, amount: 450, rate: 0.25 }, // $450-$600
+  { min: 48000, max: 72000, amount: 600, rate: 0.25 }, // $600-$750
+  { min: 72000, max: 200000, amount: 750, rate: 0.25 }, // $750-$900
+  { min: 200000, max: null, amount: 900, rate: 0 }, // $900 flat
+]
 
 export const PROVINCES: Province[] = [
   {
@@ -41,6 +84,7 @@ export const PROVINCES: Province[] = [
     smallBusinessRate: 0.02,
     combinedCorpRate: 0.11,
     dividendTaxCredit: 0.0812,
+    nonEligibleDividendTaxCredit: 0.0218,
   },
   {
     code: "BC",
@@ -58,6 +102,7 @@ export const PROVINCES: Province[] = [
     smallBusinessRate: 0.02,
     combinedCorpRate: 0.11,
     dividendTaxCredit: 0.1,
+    nonEligibleDividendTaxCredit: 0.0196,
   },
   {
     code: "SK",
@@ -71,6 +116,7 @@ export const PROVINCES: Province[] = [
     smallBusinessRate: 0.01,
     combinedCorpRate: 0.1,
     dividendTaxCredit: 0.0837,
+    nonEligibleDividendTaxCredit: 0.0294,
   },
   {
     code: "MB",
@@ -84,6 +130,7 @@ export const PROVINCES: Province[] = [
     smallBusinessRate: 0.0,
     combinedCorpRate: 0.09,
     dividendTaxCredit: 0.08,
+    nonEligibleDividendTaxCredit: 0.0008,
   },
   {
     code: "ON",
@@ -99,6 +146,8 @@ export const PROVINCES: Province[] = [
     smallBusinessRate: 0.032,
     combinedCorpRate: 0.122,
     dividendTaxCredit: 0.1,
+    nonEligibleDividendTaxCredit: 0.029863,
+    hasHealthPremium: true,
   },
   {
     code: "QC",
@@ -113,6 +162,8 @@ export const PROVINCES: Province[] = [
     smallBusinessRate: 0.032,
     combinedCorpRate: 0.122,
     dividendTaxCredit: 0.1178,
+    nonEligibleDividendTaxCredit: 0.0404,
+    isQuebec: true,
   },
   {
     code: "NB",
@@ -127,6 +178,7 @@ export const PROVINCES: Province[] = [
     smallBusinessRate: 0.025,
     combinedCorpRate: 0.115,
     dividendTaxCredit: 0.064,
+    nonEligibleDividendTaxCredit: 0.0275,
   },
   {
     code: "NS",
@@ -142,6 +194,7 @@ export const PROVINCES: Province[] = [
     smallBusinessRate: 0.025,
     combinedCorpRate: 0.115,
     dividendTaxCredit: 0.0885,
+    nonEligibleDividendTaxCredit: 0.0299,
   },
   {
     code: "PE",
@@ -156,6 +209,7 @@ export const PROVINCES: Province[] = [
     smallBusinessRate: 0.01,
     combinedCorpRate: 0.1,
     dividendTaxCredit: 0.078,
+    nonEligibleDividendTaxCredit: 0.0291,
   },
   {
     code: "NL",
@@ -174,6 +228,7 @@ export const PROVINCES: Province[] = [
     smallBusinessRate: 0.03,
     combinedCorpRate: 0.12,
     dividendTaxCredit: 0.054,
+    nonEligibleDividendTaxCredit: 0.0256,
   },
   {
     code: "YT",
@@ -189,6 +244,7 @@ export const PROVINCES: Province[] = [
     smallBusinessRate: 0.0,
     combinedCorpRate: 0.09,
     dividendTaxCredit: 0.1102,
+    nonEligibleDividendTaxCredit: 0.0196,
   },
   {
     code: "NT",
@@ -203,6 +259,7 @@ export const PROVINCES: Province[] = [
     smallBusinessRate: 0.04,
     combinedCorpRate: 0.13,
     dividendTaxCredit: 0.115,
+    nonEligibleDividendTaxCredit: 0.06,
   },
   {
     code: "NU",
@@ -217,6 +274,7 @@ export const PROVINCES: Province[] = [
     smallBusinessRate: 0.03,
     combinedCorpRate: 0.12,
     dividendTaxCredit: 0.115,
+    nonEligibleDividendTaxCredit: 0.0551,
   },
 ]
 

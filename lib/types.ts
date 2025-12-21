@@ -6,6 +6,9 @@ export interface Province {
     smallBusinessRate: number
     combinedCorpRate: number
     dividendTaxCredit: number
+    nonEligibleDividendTaxCredit: number
+    hasHealthPremium?: boolean
+    isQuebec?: boolean
   }
   
   export interface TaxBracket {
@@ -22,35 +25,44 @@ export interface Province {
   }
   
   export interface SoleProprietorshipResult {
-    grossIncome: number
-    businessDeductions: number
-    netBusinessIncome: number
-    federalTax: number
-    provincialTax: number
-    cppContributions: number
-    totalTax: number
-    netIncome: number
-    effectiveRate: number
-    rrspRoom: number
-  }
+      grossIncome: number
+      businessDeductions: number
+      netBusinessIncome: number
+      federalTax: number
+      provincialTax: number
+      cppContributions: number
+      eiContributions: number
+      qpipContributions?: number
+      healthPremium?: number
+      totalTax: number
+      netIncome: number
+      effectiveRate: number
+      rrspRoom: number
+    }
   
   export interface CorporationResult {
-    grossIncome: number
-    salary: number
-    employerCpp: number
-    corporateTaxableIncome: number
-    corporateTax: number
-    afterTaxCorporateIncome: number
-    dividendsPaid: number
-    personalTaxOnSalary: number
-    personalTaxOnDividends: number
-    totalPersonalTax: number
-    totalTax: number
-    netIncome: number
-    retainedInCorp: number
-    effectiveRate: number
-    rrspRoom: number
-  }
+      grossIncome: number
+      salary: number
+      employeeCpp: number
+      employerCpp: number
+      employeeEi: number
+      employerEi: number
+      qpipEmployee?: number
+      qpipEmployer?: number
+      corporateTaxableIncome: number
+      corporateTax: number
+      afterTaxCorporateIncome: number
+      dividendsPaid: number
+      personalTaxOnSalary: number
+      personalTaxOnDividends: number
+      healthPremium?: number
+      totalPersonalTax: number
+      totalTax: number
+      netIncome: number
+      retainedInCorp: number
+      effectiveRate: number
+      rrspRoom: number
+    }
   
   export interface ComparisonResult {
     soleProprietorship: SoleProprietorshipResult
