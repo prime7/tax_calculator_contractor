@@ -10,7 +10,6 @@ import { Disclaimer } from "@/components/disclaimer"
 import type { ComparisonResult } from "@/lib/types"
 import { compareStrategies, findOptimalSalary } from "@/lib/tax-calculation"
 import { LucideLeaf as MapleLeaf } from "lucide-react"
-import { TaxAssistant } from "@/components/chat/tax-assistant"
 
 export default function TaxCalculatorPage() {
   // Input state
@@ -186,16 +185,6 @@ export default function TaxCalculatorPage() {
           </footer>
         </div>
       </main>
-
-      <TaxAssistant
-        context={{
-          income,
-          province,
-          deductions,
-          optimalSalary,
-          recommendation: result?.recommendation,
-        }}
-      />
     </div>
   )
 }
