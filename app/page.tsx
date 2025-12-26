@@ -20,8 +20,8 @@ export default function TaxCalculatorPage() {
     homeOffice: 0,
     vehicle: 0,
     supplies: 0,
-    professionalFees: 0,
-    advertising: 0,
+    professionalDevelopment: 0,
+    utilities: 0,
     insurance: 0,
     other: 0,
   })
@@ -29,6 +29,7 @@ export default function TaxCalculatorPage() {
     medical: 0,
     charitable: 0,
     education: 0,
+    disability: 0,
     other: 0,
   })
   const [salaryAmount, setSalaryAmount] = useState(65000)

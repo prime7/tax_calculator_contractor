@@ -1,4 +1,4 @@
-import type { Province, TaxBracket } from "./types"
+import type { Province, TaxBracket } from "./base-types"
 
 // Federal tax brackets 2025
 export const FEDERAL_BRACKETS: TaxBracket[] = [
