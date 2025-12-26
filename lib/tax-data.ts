@@ -1,26 +1,26 @@
 import type { Province, TaxBracket } from "./types"
 
-// Federal tax brackets 2024
+// Federal tax brackets 2025
 export const FEDERAL_BRACKETS: TaxBracket[] = [
-  { min: 0, max: 55867, rate: 0.15 },
-  { min: 55867, max: 111733, rate: 0.205 },
-  { min: 111733, max: 173205, rate: 0.26 },
-  { min: 173205, max: 246752, rate: 0.29 },
-  { min: 246752, max: null, rate: 0.33 },
+  { min: 0, max: 53359, rate: 0.15 },
+  { min: 53359, max: 106717, rate: 0.205 },
+  { min: 106717, max: 165430, rate: 0.26 },
+  { min: 165430, max: 235675, rate: 0.29 },
+  { min: 235675, max: null, rate: 0.33 },
 ]
 
-export const FEDERAL_BASIC_PERSONAL_AMOUNT = 15705
+export const FEDERAL_BASIC_PERSONAL_AMOUNT = 14398
 export const FEDERAL_SMALL_BUSINESS_RATE = 0.09
 export const QUEBEC_ABATEMENT = 0.165 // 16.5% reduction in federal tax for Quebec
 
-// CPP Constants 2024
-export const CPP_MAX_PENSIONABLE_EARNINGS = 68500
+// CPP Constants 2025
+export const CPP_MAX_PENSIONABLE_EARNINGS = 66600
 export const CPP_BASIC_EXEMPTION = 3500
 export const CPP_RATE = 0.0595
-export const CPP_MAX_CONTRIBUTION = 3867.5
+export const CPP_MAX_CONTRIBUTION = 3500
 
-// QPP Constants 2024 (Quebec Pension Plan)
-export const QPP_MAX_PENSIONABLE_EARNINGS = 68500
+// QPP Constants 2025 (Quebec Pension Plan)
+export const QPP_MAX_PENSIONABLE_EARNINGS = 66600
 export const QPP_BASIC_EXEMPTION = 3500
 export const QPP_RATE = 0.064
 export const QPP_MAX_CONTRIBUTION = 4038.4
@@ -31,17 +31,17 @@ export const QPIP_EMPLOYEE_RATE = 0.00494
 export const QPIP_EMPLOYER_RATE = 0.00692
 export const QPIP_SELF_EMPLOYED_RATE = 0.00878
 
-// EI Constants 2024 (Employment Insurance)
-export const EI_MAX_INSURABLE_EARNINGS = 63200
-export const EI_EMPLOYEE_RATE = 0.0166
-export const EI_EMPLOYER_RATE = 0.02324
-export const EI_MAX_EMPLOYEE_CONTRIBUTION = 1049.12
-export const EI_MAX_EMPLOYER_CONTRIBUTION = 1468.77
+// EI Constants 2025 (Employment Insurance)
+export const EI_MAX_INSURABLE_EARNINGS = 61500
+export const EI_EMPLOYEE_RATE = 0.0163
+export const EI_EMPLOYER_RATE = 0.02282
+export const EI_MAX_EMPLOYEE_CONTRIBUTION = 1002.45
+export const EI_MAX_EMPLOYER_CONTRIBUTION = 1403.43
 // Quebec has reduced EI rates (no EI for parental benefits, covered by QPIP)
 export const EI_QUEBEC_EMPLOYEE_RATE = 0.0132
 export const EI_QUEBEC_EMPLOYER_RATE = 0.01848
 
-// RRSP Constants 2024
+// RRSP Constants 2025
 export const RRSP_RATE = 0.18
 export const RRSP_MAX = 31560
 
@@ -58,7 +58,7 @@ export const ELIGIBLE_FEDERAL_DIVIDEND_TAX_CREDIT = 0.150198
 export const NON_ELIGIBLE_DIVIDEND_GROSS_UP = 0.15
 export const NON_ELIGIBLE_FEDERAL_DIVIDEND_TAX_CREDIT = 0.090301
 
-// Ontario Health Premium 2024
+// Ontario Health Premium 2025 (indexed)
 export const ONTARIO_HEALTH_PREMIUM_BRACKETS = [
   { min: 0, max: 20000, amount: 0 },
   { min: 20000, max: 25000, amount: 0, rate: 0.06 }, // $0-$300
@@ -80,7 +80,7 @@ export const PROVINCES: Province[] = [
       { min: 237230, max: 355845, rate: 0.14 },
       { min: 355845, max: null, rate: 0.15 },
     ],
-    basicPersonalAmount: 21885,
+    basicPersonalAmount: 21181,
     smallBusinessRate: 0.02,
     combinedCorpRate: 0.11,
     dividendTaxCredit: 0.0812,
@@ -98,7 +98,7 @@ export const PROVINCES: Province[] = [
       { min: 181232, max: 252752, rate: 0.168 },
       { min: 252752, max: null, rate: 0.205 },
     ],
-    basicPersonalAmount: 12580,
+    basicPersonalAmount: 12181,
     smallBusinessRate: 0.02,
     combinedCorpRate: 0.11,
     dividendTaxCredit: 0.1,
@@ -112,7 +112,7 @@ export const PROVINCES: Province[] = [
       { min: 52057, max: 148734, rate: 0.125 },
       { min: 148734, max: null, rate: 0.145 },
     ],
-    basicPersonalAmount: 17661,
+    basicPersonalAmount: 17081,
     smallBusinessRate: 0.01,
     combinedCorpRate: 0.1,
     dividendTaxCredit: 0.0837,
@@ -136,13 +136,13 @@ export const PROVINCES: Province[] = [
     code: "ON",
     name: "Ontario",
     personalBrackets: [
-      { min: 0, max: 51446, rate: 0.0505 },
-      { min: 51446, max: 102894, rate: 0.0915 },
-      { min: 102894, max: 150000, rate: 0.1116 },
+      { min: 0, max: 49231, rate: 0.0505 },
+      { min: 49231, max: 98463, rate: 0.0915 },
+      { min: 98463, max: 150000, rate: 0.1116 },
       { min: 150000, max: 220000, rate: 0.1216 },
       { min: 220000, max: null, rate: 0.1316 },
     ],
-    basicPersonalAmount: 11865,
+    basicPersonalAmount: 11481,
     smallBusinessRate: 0.032,
     combinedCorpRate: 0.122,
     dividendTaxCredit: 0.1,
@@ -158,7 +158,7 @@ export const PROVINCES: Province[] = [
       { min: 103545, max: 126000, rate: 0.24 },
       { min: 126000, max: null, rate: 0.2575 },
     ],
-    basicPersonalAmount: 18056,
+    basicPersonalAmount: 17481,
     smallBusinessRate: 0.032,
     combinedCorpRate: 0.122,
     dividendTaxCredit: 0.1178,
