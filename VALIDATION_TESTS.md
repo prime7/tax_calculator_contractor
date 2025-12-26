@@ -316,5 +316,5 @@ assert(result5.corporateTax > 60000)
 
 ---
 
-**Last Updated**: December 2024  
-**Validated Against**: CRA 2024 tax tables
+**Last Updated**: December 2025
+**Validated Against**: CRA 2025 tax tables
