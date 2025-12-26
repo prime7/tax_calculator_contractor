@@ -81,23 +81,23 @@ export function DetailedDeductionsForm({ deductions, onChange }: DetailedDeducti
             />
           </div>
           <div className="space-y-1">
-            <Label htmlFor="professionalFees" className="text-sm">Professional Fees</Label>
+            <Label htmlFor="professionalDevelopment" className="text-sm">Professional Development</Label>
             <Input
-              id="professionalFees"
+              id="professionalDevelopment"
               type="number"
-              value={deductions.professionalFees || ""}
-              onChange={(e) => updateDeduction("professionalFees", e.target.value)}
+              value={deductions.professionalDevelopment || ""}
+              onChange={(e) => updateDeduction("professionalDevelopment", e.target.value)}
               placeholder="0"
               className="h-9"
             />
           </div>
           <div className="space-y-1">
-            <Label htmlFor="advertising" className="text-sm">Advertising & Marketing</Label>
+            <Label htmlFor="utilities" className="text-sm">Utilities</Label>
             <Input
-              id="advertising"
+              id="utilities"
               type="number"
-              value={deductions.advertising || ""}
-              onChange={(e) => updateDeduction("advertising", e.target.value)}
+              value={deductions.utilities || ""}
+              onChange={(e) => updateDeduction("utilities", e.target.value)}
               placeholder="0"
               className="h-9"
             />
