@@ -21,7 +21,6 @@ export default function TaxCalculatorPage() {
     vehicle: 0,
     supplies: 0,
     professionalDevelopment: 0,
-    advertising: 0,
     utilities: 0,
     insurance: 0,
     other: 0,
