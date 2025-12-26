@@ -4,19 +4,26 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { IncomeInput } from "./income-input"
 import { ProvinceSelector } from "./province-selector"
+import { DetailedDeductionsForm } from "./detailed-deductions"
+import { TaxCreditsForm } from "./tax-credits"
 import { Calculator, Info } from "lucide-react"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { ChevronDown } from "lucide-react"
 import { useState } from "react"
+import type { DetailedDeductions, TaxCredits } from "@/lib/types"
 
 interface CalculatorFormProps {
   income: number
   province: string
   deductions: number
+  detailedDeductions: DetailedDeductions
+  credits: TaxCredits
   onIncomeChange: (value: number) => void
   onProvinceChange: (value: string) => void
   onDeductionsChange: (value: number) => void
+  onDetailedDeductionsChange: (deductions: DetailedDeductions) => void
+  onCreditsChange: (credits: TaxCredits) => void
   onCalculate: () => void
   isCalculating?: boolean
 }
@@ -25,9 +32,13 @@ export function CalculatorForm({
   income,
   province,
   deductions,
+  detailedDeductions,
+  credits,
   onIncomeChange,
   onProvinceChange,
   onDeductionsChange,
+  onDetailedDeductionsChange,
+  onCreditsChange,
   onCalculate,
   isCalculating = false,
 }: CalculatorFormProps) {
@@ -53,7 +64,7 @@ export function CalculatorForm({
             <span>Advanced Options</span>
             <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${showAdvanced ? "rotate-180" : ""}`} />
           </CollapsibleTrigger>
-          <CollapsibleContent className="pt-3 sm:pt-4">
+          <CollapsibleContent className="pt-3 sm:pt-4 space-y-4">
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <span className="text-xs sm:text-sm font-medium text-foreground">Personal Deductions</span>
@@ -84,6 +95,16 @@ export function CalculatorForm({
                 helpText="RRSP, business expenses, etc."
               />
             </div>
+
+            <DetailedDeductionsForm
+              deductions={detailedDeductions}
+              onChange={onDetailedDeductionsChange}
+            />
+
+            <TaxCreditsForm
+              credits={credits}
+              onChange={onCreditsChange}
+            />
           </CollapsibleContent>
         </Collapsible>
 

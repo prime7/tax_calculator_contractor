@@ -7,7 +7,7 @@ import { SalaryDividendSlider } from "@/components/calculator/salary-dividend-sl
 import { TaxBreakdownChart } from "@/components/charts/tax-breakdown-chart"
 import { ComparisonChart } from "@/components/charts/comparison-chart"
 import { Disclaimer } from "@/components/disclaimer"
-import type { ComparisonResult } from "@/lib/types"
+import type { ComparisonResult, DetailedDeductions, TaxCredits } from "@/lib/types"
 import { compareStrategies, findOptimalSalary } from "@/lib/tax-calculation"
 import { LucideLeaf as MapleLeaf } from "lucide-react"
 
@@ -16,6 +16,21 @@ export default function TaxCalculatorPage() {
   const [income, setIncome] = useState(100000)
   const [province, setProvince] = useState("ON")
   const [deductions, setDeductions] = useState(0)
+  const [detailedDeductions, setDetailedDeductions] = useState<DetailedDeductions>({
+    homeOffice: 0,
+    vehicle: 0,
+    supplies: 0,
+    professionalFees: 0,
+    advertising: 0,
+    insurance: 0,
+    other: 0,
+  })
+  const [credits, setCredits] = useState<TaxCredits>({
+    medical: 0,
+    charitable: 0,
+    education: 0,
+    other: 0,
+  })
   const [salaryAmount, setSalaryAmount] = useState(65000)
 
   // Results state
@@ -33,8 +48,12 @@ export default function TaxCalculatorPage() {
     // Small delay for UI feedback
     setTimeout(() => {
       try {
+        // Calculate total deductions from detailed
+        const totalDetailedDeductions = Object.values(detailedDeductions).reduce((sum, val) => sum + val, 0)
+        const totalDeductions = deductions > 0 ? deductions : totalDetailedDeductions
+
         // Find optimal salary
-        const optimal = findOptimalSalary(income, province, deductions)
+        const optimal = findOptimalSalary(income, province, totalDeductions, { credits })
         setOptimalSalary(optimal)
         setSalaryAmount(optimal)
 
@@ -42,7 +61,9 @@ export default function TaxCalculatorPage() {
         const comparison = compareStrategies({
           income,
           province,
-          deductions,
+          deductions: totalDeductions,
+          detailedDeductions,
+          credits,
           salaryAmount: optimal,
         })
 
@@ -54,21 +75,26 @@ export default function TaxCalculatorPage() {
         setIsCalculating(false)
       }
     }, 300)
-  }, [income, province, deductions])
+  }, [income, province, deductions, detailedDeductions, credits])
 
   // Recalculate when salary slider changes
   useEffect(() => {
     if (!hasCalculated || !province) return
 
+    const totalDetailedDeductions = Object.values(detailedDeductions).reduce((sum, val) => sum + val, 0)
+    const totalDeductions = deductions > 0 ? deductions : totalDetailedDeductions
+
     const comparison = compareStrategies({
       income,
       province,
-      deductions,
+      deductions: totalDeductions,
+      detailedDeductions,
+      credits,
       salaryAmount,
     })
 
     setResult(comparison)
-  }, [salaryAmount, hasCalculated, income, province, deductions])
+  }, [salaryAmount, hasCalculated, income, province, deductions, detailedDeductions, credits])
 
   // Calculate max salary (net business income)
   const maxSalary = Math.max(0, income - (deductions > 0 ? deductions : income * 0.1))
@@ -105,9 +131,13 @@ export default function TaxCalculatorPage() {
                 income={income}
                 province={province}
                 deductions={deductions}
+                detailedDeductions={detailedDeductions}
+                credits={credits}
                 onIncomeChange={setIncome}
                 onProvinceChange={setProvince}
                 onDeductionsChange={setDeductions}
+                onDetailedDeductionsChange={setDetailedDeductions}
+                onCreditsChange={setCredits}
                 onCalculate={handleCalculate}
                 isCalculating={isCalculating}
               />
@@ -151,6 +181,7 @@ export default function TaxCalculatorPage() {
                   <ResultsSection
                     result={result}
                     province={province}
+                    income={income}
                     salarySlider={
                       <SalaryDividendSlider
                         salary={salaryAmount}

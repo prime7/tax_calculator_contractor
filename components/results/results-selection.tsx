@@ -1,8 +1,11 @@
 "use client"
 
 import type React from "react"
+import { Button } from "@/components/ui/button"
+import { Download } from "lucide-react"
 
 import type { ComparisonResult } from "@/lib/types"
+import { generateTaxReportPDF } from "@/lib/pdf-export"
 import { SoleProprietorshipCard } from "./sole-proprietorship-card"
 import { CorporationCard } from "./corporation-card"
 import { ComparisonSummary } from "./comparison-summary"
@@ -11,12 +14,25 @@ import { DetailedBreakdown } from "./detailed-breakdown"
 interface ResultsSectionProps {
   result: ComparisonResult
   province: string
+  income: number
   salarySlider?: React.ReactNode
 }
 
-export function ResultsSection({ result, province, salarySlider }: ResultsSectionProps) {
+export function ResultsSection({ result, province, income, salarySlider }: ResultsSectionProps) {
+  const handleExportPDF = () => {
+    generateTaxReportPDF(result, province, income)
+  }
+
   return (
     <div className="space-y-6">
+      {/* Export Button */}
+      <div className="flex justify-end">
+        <Button onClick={handleExportPDF} variant="outline" size="sm">
+          <Download className="mr-2 h-4 w-4" />
+          Export PDF Report
+        </Button>
+      </div>
+
       {/* Recommendation Summary */}
       <ComparisonSummary result={result} />
 

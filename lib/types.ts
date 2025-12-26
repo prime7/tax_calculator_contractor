@@ -17,11 +17,34 @@ export interface Province {
     rate: number
   }
   
+  export interface DetailedDeductions {
+    homeOffice: number
+    vehicle: number
+    supplies: number
+    professionalFees: number
+    advertising: number
+    insurance: number
+    other: number
+  }
+
+  export interface TaxCredits {
+    medical: number
+    charitable: number
+    education: number
+    other: number
+  }
+
   export interface CalculatorInputs {
     income: number
     province: string
     deductions: number
+    detailedDeductions?: DetailedDeductions
+    credits?: TaxCredits
     salaryAmount: number
+  }
+
+  export interface TaxCalculationOptions {
+    credits?: TaxCredits
   }
   
   export interface SoleProprietorshipResult {

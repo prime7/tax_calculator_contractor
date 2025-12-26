@@ -202,6 +202,7 @@ import type {
     income: number,
     provinceCode: string,
     deductions: number,
+    options: TaxCalculationOptions = {},
   ): SoleProprietorshipResult {
     const province = getProvinceByCode(provinceCode)
     if (!province) {
@@ -227,7 +228,12 @@ import type {
     // Ontario Health Premium
     const healthPremium = province.hasHealthPremium ? calculateOntarioHealthPremium(netBusinessIncome) : undefined
   
-    const totalTax = federalTax + provincialTax + cppContributions + eiContributions + (qpipContributions || 0) + (healthPremium || 0)
+    let totalTax = federalTax + provincialTax + cppContributions + eiContributions + (qpipContributions || 0) + (healthPremium || 0)
+
+    // Apply tax credits (simplified - assuming non-refundable credits)
+    const totalCredits = options.credits ? Object.values(options.credits).reduce((sum, val) => sum + val, 0) : 0
+    totalTax = Math.max(0, totalTax - totalCredits)
+
     const netIncome = income - totalTax - businessDeductions
     const effectiveRate = income > 0 ? (totalTax / income) * 100 : 0
     const rrspRoom = calculateRrspRoom(netBusinessIncome)
@@ -255,6 +261,7 @@ import type {
     provinceCode: string,
     salaryAmount: number,
     deductions: number,
+    options: TaxCalculationOptions = {},
   ): CorporationResult {
     const province = getProvinceByCode(provinceCode)
     if (!province) {
@@ -306,7 +313,12 @@ import type {
     const dividendsPaid = afterTaxCorporateIncome
     const { tax: personalTaxOnDividends } = calculateDividendTax(dividendsPaid, province, salary)
   
-    const totalPersonalTax = personalTaxOnSalary + personalTaxOnDividends
+    let totalPersonalTax = personalTaxOnSalary + personalTaxOnDividends
+
+    // Apply tax credits to personal tax (simplified)
+    const totalCredits = options.credits ? Object.values(options.credits).reduce((sum, val) => sum + val, 0) : 0
+    totalPersonalTax = Math.max(0, totalPersonalTax - totalCredits)
+
     const totalTax = corporateTax + totalPersonalTax + totalEmployerCosts
     const netIncome = salary + dividendsPaid - totalPersonalTax
     const retainedInCorp = 0 // We're paying out all dividends for comparison
@@ -339,7 +351,7 @@ import type {
   }
   
   // Find optimal salary amount using improved algorithm
-  export function findOptimalSalary(income: number, provinceCode: string, deductions: number): number {
+  export function findOptimalSalary(income: number, provinceCode: string, deductions: number, options: TaxCalculationOptions = {}): number {
     const netIncome = Math.max(0, income - (deductions > 0 ? deductions : income * 0.15))
     
     // Start with known optimal ranges
@@ -358,13 +370,13 @@ import type {
     
     // Test key points
     for (const salary of testPoints) {
-      const result = calculateCorporation(income, provinceCode, salary, deductions)
+      const result = calculateCorporation(income, provinceCode, salary, deductions, options)
       if (result.totalTax < minTax) {
         minTax = result.totalTax
         optimalSalary = salary
       }
     }
-    
+
     // Fine-tune around the optimal with $1000 increments
     const searchRange = 10000
     for (
@@ -372,7 +384,7 @@ import type {
       salary <= Math.min(netIncome, optimalSalary + searchRange);
       salary += 1000
     ) {
-      const result = calculateCorporation(income, provinceCode, salary, deductions)
+      const result = calculateCorporation(income, provinceCode, salary, deductions, options)
       if (result.totalTax < minTax) {
         minTax = result.totalTax
         optimalSalary = salary
@@ -384,9 +396,13 @@ import type {
   
   // Compare sole proprietorship vs corporation
   export function compareStrategies(inputs: CalculatorInputs): ComparisonResult {
-    const soleProprietorship = calculateSoleProprietorship(inputs.income, inputs.province, inputs.deductions)
-  
-    const corporation = calculateCorporation(inputs.income, inputs.province, inputs.salaryAmount, inputs.deductions)
+    const options: TaxCalculationOptions = {
+      credits: inputs.credits,
+    }
+
+    const soleProprietorship = calculateSoleProprietorship(inputs.income, inputs.province, inputs.deductions, options)
+
+    const corporation = calculateCorporation(inputs.income, inputs.province, inputs.salaryAmount, inputs.deductions, options)
   
     const taxSavings = soleProprietorship.totalTax - corporation.totalTax
     const savingsPercentage = soleProprietorship.totalTax > 0 ? (taxSavings / soleProprietorship.totalTax) * 100 : 0
