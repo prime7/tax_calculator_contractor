@@ -20,8 +20,9 @@ export default function TaxCalculatorPage() {
     homeOffice: 0,
     vehicle: 0,
     supplies: 0,
-    professionalFees: 0,
+    professionalDevelopment: 0,
     advertising: 0,
+    utilities: 0,
     insurance: 0,
     other: 0,
   })
