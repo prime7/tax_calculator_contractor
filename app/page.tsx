@@ -29,6 +29,7 @@ export default function TaxCalculatorPage() {
     medical: 0,
     charitable: 0,
     education: 0,
+    disability: 0,
     other: 0,
   })
   const [salaryAmount, setSalaryAmount] = useState(65000)
