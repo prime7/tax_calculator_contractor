@@ -5,6 +5,7 @@ import type {
     CorporationResult,
     ComparisonResult,
     CalculatorInputs,
+    TaxCalculationOptions,
   } from "./types"
   import {
     FEDERAL_BRACKETS,
