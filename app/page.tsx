@@ -8,6 +8,7 @@ import { TaxBreakdownChart } from "@/components/charts/tax-breakdown-chart"
 import { ComparisonChart } from "@/components/charts/comparison-chart"
 import { Disclaimer } from "@/components/disclaimer"
 import type { ComparisonResult, DetailedDeductions, TaxCredits } from "@/lib/types"
+import { InstallmentScheduleCard } from "@/components/results/installment-schedule-card"
 import { compareStrategies, findOptimalSalary } from "@/lib/tax-calculation"
 import { LucideLeaf as MapleLeaf } from "lucide-react"
 
@@ -32,6 +33,7 @@ export default function TaxCalculatorPage() {
     other: 0,
   })
   const [salaryAmount, setSalaryAmount] = useState(65000)
+  const [eiEnrollment, setEIEnrollment] = useState(false) // Phase 1: EI enrollment
 
   // Results state
   const [result, setResult] = useState<ComparisonResult | null>(null)
@@ -65,6 +67,7 @@ export default function TaxCalculatorPage() {
           detailedDeductions,
           credits,
           salaryAmount: optimal,
+          eiEnrollment, // Phase 1: Pass EI enrollment
         })
 
         setResult(comparison)
@@ -91,6 +94,7 @@ export default function TaxCalculatorPage() {
       detailedDeductions,
       credits,
       salaryAmount,
+      eiEnrollment, // Phase 1: Include EI enrollment
     })
 
     setResult(comparison)
@@ -199,6 +203,11 @@ export default function TaxCalculatorPage() {
                   </div>
 
                   <ComparisonChart result={result} />
+
+                  {/* Phase 1: Installment Schedule */}
+                  {result.soleProprietorship.installmentSchedule && (
+                    <InstallmentScheduleCard schedule={result.soleProprietorship.installmentSchedule} />
+                  )}
                 </>
               ) : null}
             </div>

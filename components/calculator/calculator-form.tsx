@@ -6,6 +6,7 @@ import { IncomeInput } from "./income-input"
 import { ProvinceSelector } from "./province-selector"
 import { DetailedDeductionsForm } from "./detailed-deductions"
 import { TaxCreditsForm } from "./tax-credits"
+import { EIOptions } from "./ei-options"
 import { Calculator, Info } from "lucide-react"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
@@ -19,11 +20,13 @@ interface CalculatorFormProps {
   deductions: number
   detailedDeductions: DetailedDeductions
   credits: TaxCredits
+  onDetailedDeductionsChange: (deductions: DetailedDeductions) => void
+  onCreditsChange: (credits: TaxCredits) => void
+  eiEnrollment: boolean
   onIncomeChange: (value: number) => void
   onProvinceChange: (value: string) => void
   onDeductionsChange: (value: number) => void
-  onDetailedDeductionsChange: (deductions: DetailedDeductions) => void
-  onCreditsChange: (credits: TaxCredits) => void
+  onEIEnrollmentChange: (value: boolean) => void
   onCalculate: () => void
   isCalculating?: boolean
 }
@@ -34,11 +37,13 @@ export function CalculatorForm({
   deductions,
   detailedDeductions,
   credits,
+  onDetailedDeductionsChange,
+  onCreditsChange,
+  eiEnrollment,
   onIncomeChange,
   onProvinceChange,
   onDeductionsChange,
-  onDetailedDeductionsChange,
-  onCreditsChange,
+  onEIEnrollmentChange,
   onCalculate,
   isCalculating = false,
 }: CalculatorFormProps) {
@@ -96,15 +101,14 @@ export function CalculatorForm({
               />
             </div>
 
-            <DetailedDeductionsForm
-              deductions={detailedDeductions}
-              onChange={onDetailedDeductionsChange}
-            />
+            {/* Phase 1: EI Enrollment Option */}
+            <div className="pt-2 border-t border-border">
+              <EIOptions enrolled={eiEnrollment} onChange={onEIEnrollmentChange} province={province} />
+            </div>
 
-            <TaxCreditsForm
-              credits={credits}
-              onChange={onCreditsChange}
-            />
+            <DetailedDeductionsForm deductions={detailedDeductions} onChange={onDetailedDeductionsChange} />
+
+            <TaxCreditsForm credits={credits} onChange={onCreditsChange} />
           </CollapsibleContent>
         </Collapsible>
 

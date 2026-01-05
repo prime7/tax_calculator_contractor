@@ -115,34 +115,15 @@ export function DetailedBreakdown({ result, province }: DetailedBreakdownProps) 
                       {formatCurrency(corp.employeeCpp + corp.employerCpp)}
                     </td>
                   </tr>
-                  <tr>
-                    <td className="py-1.5 sm:py-2 pl-3 sm:pl-0">EI</td>
-                    <td className="text-right py-1.5 sm:py-2 text-destructive">
-                      {formatCurrency(sole.eiContributions)}
-                    </td>
-                    <td className="text-right py-1.5 sm:py-2 text-destructive pr-3 sm:pr-0">
-                      {formatCurrency(corp.employeeEi + corp.employerEi)}
-                    </td>
-                  </tr>
-                  {isQuebec && (
+                  {/* Phase 1: EI Premiums */}
+                  {(sole.eiPremiums || corp.eiPremiums) && (
                     <tr>
-                      <td className="py-1.5 sm:py-2 pl-3 sm:pl-0">QPIP</td>
+                      <td className="py-1.5 sm:py-2 pl-3 sm:pl-0">EI</td>
                       <td className="text-right py-1.5 sm:py-2 text-destructive">
-                        {formatCurrency(sole.qpipContributions || 0)}
+                        {sole.eiPremiums ? formatCurrency(sole.eiPremiums.totalPremium) : "N/A"}
                       </td>
                       <td className="text-right py-1.5 sm:py-2 text-destructive pr-3 sm:pr-0">
-                        {formatCurrency((corp.qpipEmployee || 0) + (corp.qpipEmployer || 0))}
-                      </td>
-                    </tr>
-                  )}
-                  {provinceData?.hasHealthPremium && (
-                    <tr>
-                      <td className="py-1.5 sm:py-2 pl-3 sm:pl-0">Health Premium</td>
-                      <td className="text-right py-1.5 sm:py-2 text-destructive">
-                        {formatCurrency(sole.healthPremium || 0)}
-                      </td>
-                      <td className="text-right py-1.5 sm:py-2 text-destructive pr-3 sm:pr-0">
-                        {formatCurrency(corp.healthPremium || 0)}
+                        {corp.eiPremiums ? formatCurrency(corp.eiPremiums.totalPremium) : formatCurrency(0)}
                       </td>
                     </tr>
                   )}

@@ -1,55 +1,72 @@
+/**
+ * Main Tax Data File
+ *
+ * UPDATED FOR 2026 TAX YEAR
+ *
+ * Key Changes from 2025 to 2026:
+ * - Federal lowest bracket reduced from 15% to 14%
+ * - CPP max earnings increased to $71,300
+ * - EI max insurable earnings increased to $68,900
+ * - RRSP max increased to $33,810
+ * - All provincial brackets indexed for inflation (~2%)
+ */
+
 import type { Province, TaxBracket } from "./types"
 
-// Federal tax brackets 2025
+// === TAX YEAR ===
+export const TAX_YEAR = 2026
+
+// === FEDERAL TAX DATA 2026 ===
 export const FEDERAL_BRACKETS: TaxBracket[] = [
-  { min: 0, max: 53359, rate: 0.15 },
-  { min: 53359, max: 106717, rate: 0.205 },
-  { min: 106717, max: 165430, rate: 0.26 },
-  { min: 165430, max: 235675, rate: 0.29 },
-  { min: 235675, max: null, rate: 0.33 },
+  { min: 0, max: 58523, rate: 0.14 }, // 14% (reduced from 15%)
+  { min: 58523, max: 117045, rate: 0.205 },
+  { min: 117045, max: 181440, rate: 0.26 },
+  { min: 181440, max: 258482, rate: 0.29 },
+  { min: 258482, max: null, rate: 0.33 },
 ]
 
-export const FEDERAL_BASIC_PERSONAL_AMOUNT = 14398
+export const FEDERAL_BASIC_PERSONAL_AMOUNT = 16452 // Up from $14,398 (2025)
 export const FEDERAL_SMALL_BUSINESS_RATE = 0.09
 export const QUEBEC_ABATEMENT = 0.165 // 16.5% reduction in federal tax for Quebec
 
-// CPP Constants 2025
-export const CPP_MAX_PENSIONABLE_EARNINGS = 66600
+// === CPP/QPP CONSTANTS 2026 ===
+export const CPP_MAX_PENSIONABLE_EARNINGS = 71300 // Up from $66,600 (2025)
 export const CPP_BASIC_EXEMPTION = 3500
 export const CPP_RATE = 0.0595
-export const CPP_MAX_CONTRIBUTION = 3500
+export const CPP_MAX_CONTRIBUTION = 4230.45 // Employee portion
+export const CPP_MAX_SELF_EMPLOYED = 8460.9 // Self-employed (2x employee)
 
-// QPP Constants 2025 (Quebec Pension Plan)
-export const QPP_MAX_PENSIONABLE_EARNINGS = 66600
+// QPP Constants 2026 (Quebec Pension Plan)
+export const QPP_MAX_PENSIONABLE_EARNINGS = 71300
 export const QPP_BASIC_EXEMPTION = 3500
 export const QPP_RATE = 0.064
-export const QPP_MAX_CONTRIBUTION = 4038.4
+export const QPP_MAX_CONTRIBUTION = 4339.2
 
-// QPIP Constants 2024 (Quebec Parental Insurance Plan)
-export const QPIP_MAX_INSURABLE_EARNINGS = 94000
+// === QPIP CONSTANTS 2026 (Quebec Parental Insurance Plan) ===
+export const QPIP_MAX_INSURABLE_EARNINGS = 96500 // Up from $94,000 (2025)
 export const QPIP_EMPLOYEE_RATE = 0.00494
 export const QPIP_EMPLOYER_RATE = 0.00692
 export const QPIP_SELF_EMPLOYED_RATE = 0.00878
 
-// EI Constants 2025 (Employment Insurance)
-export const EI_MAX_INSURABLE_EARNINGS = 61500
-export const EI_EMPLOYEE_RATE = 0.0163
-export const EI_EMPLOYER_RATE = 0.02282
-export const EI_MAX_EMPLOYEE_CONTRIBUTION = 1002.45
-export const EI_MAX_EMPLOYER_CONTRIBUTION = 1403.43
+// === EI CONSTANTS 2026 (Employment Insurance) ===
+export const EI_MAX_INSURABLE_EARNINGS = 68900 // Up from $61,500 (2025)
+export const EI_EMPLOYEE_RATE = 0.0164 // 1.64%
+export const EI_EMPLOYER_RATE = 0.02296 // 1.4x employee rate
+export const EI_MAX_EMPLOYEE_CONTRIBUTION = 1130.16
+export const EI_MAX_EMPLOYER_CONTRIBUTION = 1582.22
 // Quebec has reduced EI rates (no EI for parental benefits, covered by QPIP)
-export const EI_QUEBEC_EMPLOYEE_RATE = 0.0132
-export const EI_QUEBEC_EMPLOYER_RATE = 0.01848
+export const EI_QUEBEC_EMPLOYEE_RATE = 0.013 // 1.30%
+export const EI_QUEBEC_EMPLOYER_RATE = 0.0182 // 1.4x employee rate
 
-// RRSP Constants 2025
+// === RRSP CONSTANTS 2026 ===
 export const RRSP_RATE = 0.18
-export const RRSP_MAX = 31560
+export const RRSP_MAX = 33810 // Up from $31,560 (2025)
 
-// Small Business Deduction Limit
+// === SMALL BUSINESS DEDUCTION ===
 export const SBD_LIMIT = 500000
 export const GENERAL_CORP_RATE = 0.265 // Combined federal + provincial average for income over SBD limit
 
-// Dividend gross-up and federal credits
+// === DIVIDEND TAX CONSTANTS ===
 // Eligible dividends (from public corps or CCPCs with general rate income)
 export const ELIGIBLE_DIVIDEND_GROSS_UP = 0.38
 export const ELIGIBLE_FEDERAL_DIVIDEND_TAX_CREDIT = 0.150198
@@ -58,9 +75,9 @@ export const ELIGIBLE_FEDERAL_DIVIDEND_TAX_CREDIT = 0.150198
 export const NON_ELIGIBLE_DIVIDEND_GROSS_UP = 0.15
 export const NON_ELIGIBLE_FEDERAL_DIVIDEND_TAX_CREDIT = 0.090301
 
-// Ontario Health Premium 2025 (indexed)
+// === ONTARIO HEALTH PREMIUM 2026 ===
 export const ONTARIO_HEALTH_PREMIUM_BRACKETS = [
-  { min: 0, max: 20000, amount: 0 },
+  { min: 0, max: 20000, amount: 0, rate: 0 },
   { min: 20000, max: 25000, amount: 0, rate: 0.06 }, // $0-$300
   { min: 25000, max: 36000, amount: 300, rate: 0.06 }, // $300-$450
   { min: 36000, max: 48000, amount: 450, rate: 0.25 }, // $450-$600
@@ -69,18 +86,19 @@ export const ONTARIO_HEALTH_PREMIUM_BRACKETS = [
   { min: 200000, max: null, amount: 900, rate: 0 }, // $900 flat
 ]
 
+// === PROVINCIAL DATA 2026 ===
 export const PROVINCES: Province[] = [
   {
     code: "AB",
     name: "Alberta",
     personalBrackets: [
-      { min: 0, max: 148269, rate: 0.1 },
-      { min: 148269, max: 177922, rate: 0.12 },
-      { min: 177922, max: 237230, rate: 0.13 },
-      { min: 237230, max: 355845, rate: 0.14 },
-      { min: 355845, max: null, rate: 0.15 },
+      { min: 0, max: 151234, rate: 0.1 },
+      { min: 151234, max: 181481, rate: 0.12 },
+      { min: 181481, max: 241975, rate: 0.13 },
+      { min: 241975, max: 362963, rate: 0.14 },
+      { min: 362963, max: null, rate: 0.15 },
     ],
-    basicPersonalAmount: 21181,
+    basicPersonalAmount: 22326,
     smallBusinessRate: 0.02,
     combinedCorpRate: 0.11,
     dividendTaxCredit: 0.0812,
@@ -90,15 +108,15 @@ export const PROVINCES: Province[] = [
     code: "BC",
     name: "British Columbia",
     personalBrackets: [
-      { min: 0, max: 47937, rate: 0.0506 },
-      { min: 47937, max: 95875, rate: 0.077 },
-      { min: 95875, max: 110076, rate: 0.105 },
-      { min: 110076, max: 133664, rate: 0.1229 },
-      { min: 133664, max: 181232, rate: 0.147 },
-      { min: 181232, max: 252752, rate: 0.168 },
-      { min: 252752, max: null, rate: 0.205 },
+      { min: 0, max: 48896, rate: 0.0506 },
+      { min: 48896, max: 97792, rate: 0.077 },
+      { min: 97792, max: 112317, rate: 0.105 },
+      { min: 112317, max: 136337, rate: 0.1229 },
+      { min: 136337, max: 184857, rate: 0.147 },
+      { min: 184857, max: 257808, rate: 0.168 },
+      { min: 257808, max: null, rate: 0.205 },
     ],
-    basicPersonalAmount: 12181,
+    basicPersonalAmount: 12832,
     smallBusinessRate: 0.02,
     combinedCorpRate: 0.11,
     dividendTaxCredit: 0.1,
@@ -108,11 +126,11 @@ export const PROVINCES: Province[] = [
     code: "SK",
     name: "Saskatchewan",
     personalBrackets: [
-      { min: 0, max: 52057, rate: 0.105 },
-      { min: 52057, max: 148734, rate: 0.125 },
-      { min: 148734, max: null, rate: 0.145 },
+      { min: 0, max: 53098, rate: 0.105 },
+      { min: 53098, max: 151711, rate: 0.125 },
+      { min: 151711, max: null, rate: 0.145 },
     ],
-    basicPersonalAmount: 17081,
+    basicPersonalAmount: 18014,
     smallBusinessRate: 0.01,
     combinedCorpRate: 0.1,
     dividendTaxCredit: 0.0837,
@@ -122,11 +140,11 @@ export const PROVINCES: Province[] = [
     code: "MB",
     name: "Manitoba",
     personalBrackets: [
-      { min: 0, max: 47000, rate: 0.108 },
-      { min: 47000, max: 100000, rate: 0.1275 },
-      { min: 100000, max: null, rate: 0.174 },
+      { min: 0, max: 47940, rate: 0.108 },
+      { min: 47940, max: 102000, rate: 0.1275 },
+      { min: 102000, max: null, rate: 0.174 },
     ],
-    basicPersonalAmount: 15000,
+    basicPersonalAmount: 15300,
     smallBusinessRate: 0.0,
     combinedCorpRate: 0.09,
     dividendTaxCredit: 0.08,
@@ -136,13 +154,13 @@ export const PROVINCES: Province[] = [
     code: "ON",
     name: "Ontario",
     personalBrackets: [
-      { min: 0, max: 49231, rate: 0.0505 },
-      { min: 49231, max: 98463, rate: 0.0915 },
-      { min: 98463, max: 150000, rate: 0.1116 },
-      { min: 150000, max: 220000, rate: 0.1216 },
-      { min: 220000, max: null, rate: 0.1316 },
+      { min: 0, max: 52475, rate: 0.0505 },
+      { min: 52475, max: 104951, rate: 0.0915 },
+      { min: 104951, max: 153000, rate: 0.1116 },
+      { min: 153000, max: 224400, rate: 0.1216 },
+      { min: 224400, max: null, rate: 0.1316 },
     ],
-    basicPersonalAmount: 11481,
+    basicPersonalAmount: 12102,
     smallBusinessRate: 0.032,
     combinedCorpRate: 0.122,
     dividendTaxCredit: 0.1,
@@ -153,12 +171,12 @@ export const PROVINCES: Province[] = [
     code: "QC",
     name: "Quebec",
     personalBrackets: [
-      { min: 0, max: 51780, rate: 0.14 },
-      { min: 51780, max: 103545, rate: 0.19 },
-      { min: 103545, max: 126000, rate: 0.24 },
-      { min: 126000, max: null, rate: 0.2575 },
+      { min: 0, max: 52816, rate: 0.14 },
+      { min: 52816, max: 105616, rate: 0.19 },
+      { min: 105616, max: 128528, rate: 0.24 },
+      { min: 128528, max: null, rate: 0.2575 },
     ],
-    basicPersonalAmount: 17481,
+    basicPersonalAmount: 18417,
     smallBusinessRate: 0.032,
     combinedCorpRate: 0.122,
     dividendTaxCredit: 0.1178,
@@ -169,12 +187,12 @@ export const PROVINCES: Province[] = [
     code: "NB",
     name: "New Brunswick",
     personalBrackets: [
-      { min: 0, max: 49958, rate: 0.094 },
-      { min: 49958, max: 99916, rate: 0.14 },
-      { min: 99916, max: 185064, rate: 0.16 },
-      { min: 185064, max: null, rate: 0.195 },
+      { min: 0, max: 50958, rate: 0.094 },
+      { min: 50958, max: 101915, rate: 0.14 },
+      { min: 101915, max: 188765, rate: 0.16 },
+      { min: 188765, max: null, rate: 0.195 },
     ],
-    basicPersonalAmount: 13044,
+    basicPersonalAmount: 13305,
     smallBusinessRate: 0.025,
     combinedCorpRate: 0.115,
     dividendTaxCredit: 0.064,
@@ -184,13 +202,13 @@ export const PROVINCES: Province[] = [
     code: "NS",
     name: "Nova Scotia",
     personalBrackets: [
-      { min: 0, max: 29590, rate: 0.0879 },
-      { min: 29590, max: 59180, rate: 0.1495 },
-      { min: 59180, max: 93000, rate: 0.1667 },
-      { min: 93000, max: 150000, rate: 0.175 },
-      { min: 150000, max: null, rate: 0.21 },
+      { min: 0, max: 30182, rate: 0.0879 },
+      { min: 30182, max: 60363, rate: 0.1495 },
+      { min: 60363, max: 94860, rate: 0.1667 },
+      { min: 94860, max: 153000, rate: 0.175 },
+      { min: 153000, max: null, rate: 0.21 },
     ],
-    basicPersonalAmount: 11744,
+    basicPersonalAmount: 11979,
     smallBusinessRate: 0.025,
     combinedCorpRate: 0.115,
     dividendTaxCredit: 0.0885,
@@ -200,12 +218,12 @@ export const PROVINCES: Province[] = [
     code: "PE",
     name: "Prince Edward Island",
     personalBrackets: [
-      { min: 0, max: 32656, rate: 0.098 },
-      { min: 32656, max: 64313, rate: 0.138 },
-      { min: 64313, max: 105000, rate: 0.167 },
-      { min: 105000, max: null, rate: 0.18 },
+      { min: 0, max: 33309, rate: 0.098 },
+      { min: 33309, max: 65599, rate: 0.138 },
+      { min: 65599, max: 107100, rate: 0.167 },
+      { min: 107100, max: null, rate: 0.18 },
     ],
-    basicPersonalAmount: 13500,
+    basicPersonalAmount: 13770,
     smallBusinessRate: 0.01,
     combinedCorpRate: 0.1,
     dividendTaxCredit: 0.078,
@@ -215,16 +233,16 @@ export const PROVINCES: Province[] = [
     code: "NL",
     name: "Newfoundland & Labrador",
     personalBrackets: [
-      { min: 0, max: 43198, rate: 0.087 },
-      { min: 43198, max: 86395, rate: 0.145 },
-      { min: 86395, max: 154244, rate: 0.158 },
-      { min: 154244, max: 215943, rate: 0.173 },
-      { min: 215943, max: 275870, rate: 0.183 },
-      { min: 275870, max: 551739, rate: 0.193 },
-      { min: 551739, max: 1103478, rate: 0.203 },
-      { min: 1103478, max: null, rate: 0.213 },
+      { min: 0, max: 44062, rate: 0.087 },
+      { min: 44062, max: 88123, rate: 0.145 },
+      { min: 88123, max: 157329, rate: 0.158 },
+      { min: 157329, max: 220262, rate: 0.173 },
+      { min: 220262, max: 281387, rate: 0.183 },
+      { min: 281387, max: 562774, rate: 0.193 },
+      { min: 562774, max: 1125548, rate: 0.203 },
+      { min: 1125548, max: null, rate: 0.213 },
     ],
-    basicPersonalAmount: 10382,
+    basicPersonalAmount: 10590,
     smallBusinessRate: 0.03,
     combinedCorpRate: 0.12,
     dividendTaxCredit: 0.054,
@@ -234,13 +252,13 @@ export const PROVINCES: Province[] = [
     code: "YT",
     name: "Yukon",
     personalBrackets: [
-      { min: 0, max: 55867, rate: 0.064 },
-      { min: 55867, max: 111733, rate: 0.09 },
-      { min: 111733, max: 173205, rate: 0.109 },
-      { min: 173205, max: 500000, rate: 0.128 },
-      { min: 500000, max: null, rate: 0.15 },
+      { min: 0, max: 56985, rate: 0.064 },
+      { min: 56985, max: 113968, rate: 0.09 },
+      { min: 113968, max: 176669, rate: 0.109 },
+      { min: 176669, max: 510000, rate: 0.128 },
+      { min: 510000, max: null, rate: 0.15 },
     ],
-    basicPersonalAmount: 15705,
+    basicPersonalAmount: 16019,
     smallBusinessRate: 0.0,
     combinedCorpRate: 0.09,
     dividendTaxCredit: 0.1102,
@@ -250,12 +268,12 @@ export const PROVINCES: Province[] = [
     code: "NT",
     name: "Northwest Territories",
     personalBrackets: [
-      { min: 0, max: 50597, rate: 0.059 },
-      { min: 50597, max: 101198, rate: 0.086 },
-      { min: 101198, max: 164525, rate: 0.122 },
-      { min: 164525, max: null, rate: 0.1405 },
+      { min: 0, max: 51609, rate: 0.059 },
+      { min: 51609, max: 103222, rate: 0.086 },
+      { min: 103222, max: 167816, rate: 0.122 },
+      { min: 167816, max: null, rate: 0.1405 },
     ],
-    basicPersonalAmount: 16593,
+    basicPersonalAmount: 16925,
     smallBusinessRate: 0.04,
     combinedCorpRate: 0.13,
     dividendTaxCredit: 0.115,
@@ -265,12 +283,12 @@ export const PROVINCES: Province[] = [
     code: "NU",
     name: "Nunavut",
     personalBrackets: [
-      { min: 0, max: 53268, rate: 0.04 },
-      { min: 53268, max: 106537, rate: 0.07 },
-      { min: 106537, max: 173205, rate: 0.09 },
-      { min: 173205, max: null, rate: 0.115 },
+      { min: 0, max: 54333, rate: 0.04 },
+      { min: 54333, max: 108668, rate: 0.07 },
+      { min: 108668, max: 176669, rate: 0.09 },
+      { min: 176669, max: null, rate: 0.115 },
     ],
-    basicPersonalAmount: 18767,
+    basicPersonalAmount: 19142,
     smallBusinessRate: 0.03,
     combinedCorpRate: 0.12,
     dividendTaxCredit: 0.115,
@@ -278,6 +296,10 @@ export const PROVINCES: Province[] = [
   },
 ]
 
+// Helper function to get province by code
 export function getProvinceByCode(code: string): Province | undefined {
   return PROVINCES.find((p) => p.code === code)
 }
+
+// === GST/HST DATA 2026 (Phase 2 - for future use) ===
+export { GST_HST_2026, getProvinceGSTHST } from "./tax-data/gst-hst-2026"
