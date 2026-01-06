@@ -137,11 +137,13 @@ export default function TaxCalculatorPage() {
                 deductions={deductions}
                 detailedDeductions={detailedDeductions}
                 credits={credits}
+                eiEnrollment={eiEnrollment}
                 onIncomeChange={setIncome}
                 onProvinceChange={setProvince}
                 onDeductionsChange={setDeductions}
                 onDetailedDeductionsChange={setDetailedDeductions}
                 onCreditsChange={setCredits}
+                onEIEnrollmentChange={setEIEnrollment}
                 onCalculate={handleCalculate}
                 isCalculating={isCalculating}
               />

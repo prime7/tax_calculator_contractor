@@ -27,6 +27,7 @@ export const PROVINCES_2026: Province[] = [
     smallBusinessRate: 0.02, // 2%
     combinedCorpRate: 0.11, // 11% (federal 9% + provincial 2%)
     dividendTaxCredit: 0.0812, // 8.12%
+    nonEligibleDividendTaxCredit: 0.0218,
   },
   {
     code: "BC",
@@ -44,6 +45,7 @@ export const PROVINCES_2026: Province[] = [
     smallBusinessRate: 0.02, // 2%
     combinedCorpRate: 0.11, // 11%
     dividendTaxCredit: 0.1, // 10%
+    nonEligibleDividendTaxCredit: 0.0196,
   },
   {
     code: "SK",
@@ -57,6 +59,7 @@ export const PROVINCES_2026: Province[] = [
     smallBusinessRate: 0.01, // 1%
     combinedCorpRate: 0.1, // 10%
     dividendTaxCredit: 0.0837, // 8.37%
+    nonEligibleDividendTaxCredit: 0.0294,
   },
   {
     code: "MB",
@@ -70,6 +73,7 @@ export const PROVINCES_2026: Province[] = [
     smallBusinessRate: 0.0, // 0%
     combinedCorpRate: 0.09, // 9%
     dividendTaxCredit: 0.08, // 8%
+    nonEligibleDividendTaxCredit: 0.0008,
   },
   {
     code: "ON",
@@ -85,6 +89,8 @@ export const PROVINCES_2026: Province[] = [
     smallBusinessRate: 0.032, // 3.2%
     combinedCorpRate: 0.122, // 12.2%
     dividendTaxCredit: 0.1, // 10%
+    nonEligibleDividendTaxCredit: 0.029863,
+    hasHealthPremium: true,
   },
   {
     code: "QC",
@@ -99,6 +105,8 @@ export const PROVINCES_2026: Province[] = [
     smallBusinessRate: 0.032, // 3.2%
     combinedCorpRate: 0.122, // 12.2%
     dividendTaxCredit: 0.1178, // 11.78%
+    nonEligibleDividendTaxCredit: 0.0404,
+    isQuebec: true,
   },
   {
     code: "NB",
@@ -113,6 +121,7 @@ export const PROVINCES_2026: Province[] = [
     smallBusinessRate: 0.025, // 2.5%
     combinedCorpRate: 0.115, // 11.5%
     dividendTaxCredit: 0.064, // 6.4%
+    nonEligibleDividendTaxCredit: 0.0275,
   },
   {
     code: "NS",
@@ -128,6 +137,7 @@ export const PROVINCES_2026: Province[] = [
     smallBusinessRate: 0.025, // 2.5%
     combinedCorpRate: 0.115, // 11.5%
     dividendTaxCredit: 0.0885, // 8.85%
+    nonEligibleDividendTaxCredit: 0.0299,
   },
   {
     code: "PE",
@@ -142,6 +152,7 @@ export const PROVINCES_2026: Province[] = [
     smallBusinessRate: 0.01, // 1%
     combinedCorpRate: 0.1, // 10%
     dividendTaxCredit: 0.078, // 7.8%
+    nonEligibleDividendTaxCredit: 0.0291,
   },
   {
     code: "NL",
@@ -160,6 +171,7 @@ export const PROVINCES_2026: Province[] = [
     smallBusinessRate: 0.03, // 3%
     combinedCorpRate: 0.12, // 12%
     dividendTaxCredit: 0.054, // 5.4%
+    nonEligibleDividendTaxCredit: 0.0256,
   },
   {
     code: "YT",
@@ -175,6 +187,7 @@ export const PROVINCES_2026: Province[] = [
     smallBusinessRate: 0.0, // 0%
     combinedCorpRate: 0.09, // 9%
     dividendTaxCredit: 0.1102, // 11.02%
+    nonEligibleDividendTaxCredit: 0.0196,
   },
   {
     code: "NT",
@@ -189,6 +202,7 @@ export const PROVINCES_2026: Province[] = [
     smallBusinessRate: 0.04, // 4%
     combinedCorpRate: 0.13, // 13%
     dividendTaxCredit: 0.115, // 11.5%
+    nonEligibleDividendTaxCredit: 0.06,
   },
   {
     code: "NU",
@@ -203,6 +217,7 @@ export const PROVINCES_2026: Province[] = [
     smallBusinessRate: 0.03, // 3%
     combinedCorpRate: 0.12, // 12%
     dividendTaxCredit: 0.115, // 11.5%
+    nonEligibleDividendTaxCredit: 0.0551,
   },
 ]
 
